@@ -1,4 +1,3 @@
-# NOT CORRECT!
 from functools import cmp_to_key
 
 lines: list[str] = []
@@ -69,11 +68,6 @@ def compare_hands(hand_a: tuple[str, int], hand_b: tuple[str, int]) -> int:
     cards_a = convert_jokers(hand_a[0])
     cards_b = convert_jokers(hand_b[0])
 
-    if cards_a != hand_a[0]:
-        print(f"Converted {hand_a[0]} to {cards_a}")
-    if cards_b != hand_b[0]:
-        print(f"Converted {hand_b[0]} to {cards_b}")
-
     num_unique_a, num_unique_b = len(set(cards_a)), len(set(cards_b))
     
     if num_unique_a != num_unique_b:
@@ -82,14 +76,14 @@ def compare_hands(hand_a: tuple[str, int], hand_b: tuple[str, int]) -> int:
     
     if num_unique_a in [1, 5]:
         # hands are both of type Five-of-a-kind or High-card; shortcut
-        return compare_same_type(cards_a, cards_b)
+        return compare_same_type(hand_a[0], hand_b[0])
     
     counts_a, counts_b = get_counts(cards_a), get_counts(cards_b)
     max_count_a, max_count_b = max(counts_a.values()), max(counts_b.values())
 
     if max_count_a == max_count_b:
         # hands have same type
-        return compare_same_type(cards_a, cards_b)
+        return compare_same_type(hand_a[0], hand_b[0])
 
     return 1 if max_count_a > max_count_b else -1
 
